@@ -1,0 +1,38 @@
+package hibernate.hiber;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.internal.SessionFactoryImpl;
+
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    @SuppressWarnings("deprecation")
+	public static void main( String[] args )
+    {
+        Employee emp = new Employee();
+        emp.setEmp_id(111);
+        emp.setF_name("Alan");
+        emp.setL_name("Biju");
+        
+        
+        Configuration config = new Configuration().configure().addAnnotatedClass(Employee.class);
+        
+        //ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(config.getProperties()).buildServiceRegistry();
+        
+         SessionFactory factory = config.buildSessionFactory();
+        
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        
+         session.save(emp);
+         tx.commit();
+    }
+}
